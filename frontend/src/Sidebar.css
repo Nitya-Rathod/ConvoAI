@@ -1,0 +1,153 @@
+.sidebar {
+  background-color: #171717;
+  color: #b4b4b4;
+  height: 100vh;
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.sidebar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  margin: 5px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.menubar {
+  opacity: 0.4;
+  font-weight: 10px;
+}
+
+.logo {
+  font-size: 25px;
+}
+
+.options {
+  list-style-type: none;
+  font-size: 12px;
+  margin: 5px;
+  padding-bottom: 5px;
+}
+
+.options li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  height: 40px;
+  padding: 0 12px;
+
+  border-radius: 10px;
+  font-weight: 500;
+  color: #ececec;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.options li:hover {
+  background-color: rgba(180, 180, 180, 0.05);
+  border-radius: 10px;
+}
+
+.history {
+  margin: 5px;
+  padding: 5px;
+  flex: 1;
+  font-size: 12px;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* old Edge/IE */
+}
+
+.history::-webkit-scrollbar {
+  display: none; /* Chrome, Edge, Safari */
+}
+
+.history li {
+  list-style-type: none;
+  cursor: pointer;
+  padding: 2px 5px;
+  margin-bottom: 0.3rem;
+  font-size: 14px;
+  border: solid 10px transparent;
+  position: relative;
+}
+
+.history li:hover {
+  background-color: rgba(180, 180, 180, 0.05);
+  border-radius: 10px;
+}
+
+.fa-trash {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+}
+
+.history li:hover .fa-trash {
+  opacity: 1;
+  color: #fff;
+}
+
+.history li {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fa-trash:hover {
+  color: #f87171 !important;
+}
+.userIconDiv .fa-user {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #a6a29c;
+  color: #1a1a1a;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 15px;
+}
+
+.userIconDiv {
+  border-top: solid 1px rgba(255, 255, 255, 0.1);
+}
+
+/* drop down features */
+.dropdown {
+  position: absolute;
+  bottom: 3rem;
+  left: 1rem;
+  width: 150px;
+  background-color: #323232;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  text-align: left;
+  z-index: 1000;
+  box-shadow: rgba(0, 0, 0, 0.1);
+}
+
+.dropdownItem {
+  font-size: 0.8rem;
+  margin: 0.3rem 0rem;
+  padding: 0.5rem 0.2rem;
+}
+
+.dropdownItem:hover {
+  background-color: rgba(180, 180, 180, 0.1);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.highlighted {
+  background-color: rgba(180, 180, 180, 0.05);
+  border-radius: 10px;
+}

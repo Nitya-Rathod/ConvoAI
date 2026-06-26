@@ -1,0 +1,36 @@
+.chats {
+  max-width: 600px;
+  overflow-y: scroll;
+  padding: 3rem;
+
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* old Edge / IE */
+}
+
+.chat::-webkit-scrollbar {
+  display: none; /* Chrome, Edge, Safari */
+}
+
+.userDiv {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.9rem;
+}
+
+.aiDiv {
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.userMsg {
+  background-color: #323232;
+  padding: 10px 20px;
+  border-radius: 28px;
+  margin-left: 15rem;
+  width: fit-content;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #4d4d4f;
+}
