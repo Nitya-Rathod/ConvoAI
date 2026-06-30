@@ -4,6 +4,7 @@ import { MyContext } from "./MyContext.jsx";
 import { v1 as uuidv1 } from "uuid";
 import { AuthContext } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +31,14 @@ export default function Sidebar() {
       const response = await fetch("http://localhost:8080/api/thread", {
         credentials: "include",
       });
+
+      if (response.status === 401) {
+        setUser(null);
+        toast.error("Session expired. Please log in again.");
+        navigate("/login");
+        return;
+      }
+
       const res = await response.json();
 
       if (!response.ok) {
@@ -45,6 +54,7 @@ export default function Sidebar() {
       setAllThreads(filteredData);
     } catch (err) {
       console.log(err);
+      toast.error("Couldn't load chats");
     }
   };
 
@@ -68,12 +78,27 @@ export default function Sidebar() {
         `http://localhost:8080/api/thread/${newThreadId}`,
         { credentials: "include" },
       );
+
+      if (response.status === 401) {
+        setUser(null);
+        toast.error("Session expired. Please log in again.");
+        navigate("/login");
+        return;
+      }
+
       const res = await response.json();
+
+      if (!response.ok) {
+        toast.error(res.error || "Couldn't open chat");
+        return;
+      }
+
       setPrevChats(res.messages);
       setNewChat(false);
       setReply(null);
     } catch (err) {
       console.log(err);
+      toast.error("Couldn't load chat");
     }
   };
 
@@ -83,9 +108,23 @@ export default function Sidebar() {
         `http://localhost:8080/api/thread/${threadId}`,
         { method: "DELETE", credentials: "include" },
       );
+
+      if (response.status === 401) {
+        setUser(null);
+        toast.error("Session expired. Please log in again.");
+        navigate("/login");
+        return;
+      }
+
       const res = await response.json();
 
-      //updated threads re-render
+      if (!response.ok) {
+        toast.error(res.error || "Couldn't delete chat");
+        return;
+      }
+      toast.success("Chat deleted");
+
+      //update threads re-render
       setAllThreads((prev) =>
         prev.filter((thread) => thread.threadId !== threadId),
       );
@@ -95,6 +134,7 @@ export default function Sidebar() {
       }
     } catch (err) {
       console.log(err);
+      toast.error("Couldn't delete chat");
     }
   };
 
@@ -114,16 +154,16 @@ export default function Sidebar() {
       }
 
       setUser(null);
-
-      // Optional: clear chat state
       setAllThreads([]);
       setPrevChats([]);
       setReply(null);
+      toast.success("Logged out successfully!");
       setPrompt("");
 
       navigate("/");
     } catch (err) {
       console.log(err);
+      toast.error("Couldn't log out");
     }
   };
 

@@ -2,12 +2,12 @@ import "./Signup.css";
 import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
+import toast from "react-hot-toast";
 
 export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { setUser } = useContext(AuthContext);
@@ -15,7 +15,6 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
     try {
@@ -29,15 +28,17 @@ export default function Signup() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || "Signup failed");
+        toast.error(data.error || "Login failed");
         setLoading(false);
         return;
       }
 
       setUser(data.user);
+      toast.success("Signed in successfully!");
       navigate("/");
     } catch (err) {
-      setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
+    } finally {
       setLoading(false);
     }
   };
@@ -47,8 +48,6 @@ export default function Signup() {
       <form className="authCard" onSubmit={handleSubmit}>
         <p className="authTitle">Create your account</p>
         <p className="authSubtitle">Start chatting with ConvoAI in seconds</p>
-
-        {error && <p className="authError">{error}</p>}
 
         <label className="authLabel">Name</label>
         <input

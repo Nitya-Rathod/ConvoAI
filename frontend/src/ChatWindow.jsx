@@ -5,6 +5,7 @@ import { useContext, useState, useEffect } from "react";
 import { ScaleLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
+import toast from "react-hot-toast";
 
 function ChatWindow() {
   const {
@@ -21,12 +22,17 @@ function ChatWindow() {
 
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const { user } = useContext(AuthContext);
   const isLoggedIn = !!user;
 
   const getReply = async () => {
+    // prevents empty messages.
+    if (!prompt.trim()) {
+      toast.error("Please enter a message.");
+      return;
+    }
+
     setLoading(true);
     setNewChat(false);
 
@@ -44,13 +50,27 @@ function ChatWindow() {
 
     try {
       const response = await fetch("http://localhost:8080/api/chat", options);
+
+      if (response.status === 401) {
+        toast.error("Session expired. Please log in again.");
+        navigate("/login");
+        return;
+      }
+
       const res = await response.json();
+
+      if (!response.ok) {
+        toast.error(res.error || "Failed to generate response");
+        return;
+      }
 
       setReply(res.reply);
     } catch (err) {
       console.log(err);
+      toast.error("Network error. Please try again.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   //Append new chat to prevChats
@@ -75,26 +95,6 @@ function ChatWindow() {
   const handleProfileClick = () => {
     setIsOpen(!isOpen);
   };
-
-  // useEffect(() => {
-  //   const checkLogin = async () => {
-  //     try {
-  //       const response = await fetch("http://localhost:8080/api/auth/me", {
-  //         credentials: "include",
-  //       });
-
-  //       if (response.ok) {
-  //         setIsLoggedIn(true);
-  //       } else {
-  //         setIsLoggedIn(false);
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-
-  //   checkLogin();
-  // }, []);
 
   return (
     <div className="chatWindow">

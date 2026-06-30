@@ -101,7 +101,7 @@
 
 .editTextarea {
   width: 100%;
-  min-height: 140px;
+  min-height: 100px;
   background: #2f2f2f;
   color: white;
   border: 1px solid #565656;

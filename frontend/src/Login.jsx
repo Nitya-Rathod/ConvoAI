@@ -2,11 +2,11 @@ import "./Login.css";
 import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { setUser } = useContext(AuthContext);
@@ -14,8 +14,6 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
 
     try {
       const response = await fetch("http://localhost:8080/api/auth/login", {
@@ -28,15 +26,17 @@ export default function Login() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || "Login failed");
+        toast.error(data.error || "Login failed");
         setLoading(false);
         return;
       }
 
       setUser(data.user);
+      toast.success("Logged in successfully!");
       navigate("/");
     } catch (err) {
-      setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
+    } finally {
       setLoading(false);
     }
   };
@@ -46,8 +46,6 @@ export default function Login() {
       <form className="authCard" onSubmit={handleSubmit}>
         <p className="authTitle">Welcome back</p>
         <p className="authSubtitle">Log in to continue your conversations</p>
-
-        {error && <p className="authError">{error}</p>}
 
         <label className="authLabel">Email</label>
         <input

@@ -131,13 +131,9 @@ router.put("/thread/:threadId/edit", verifyToken, async (req, res) => {
       });
     }
 
-    // Update the user's message
     thread.messages[lastUserIndex].content = editedMessage;
+    thread.messages = thread.messages.slice(0, lastUserIndex + 1); // Remove everything after that message
 
-    // Remove everything after that message
-    thread.messages = thread.messages.slice(0, lastUserIndex + 1);
-
-    // Generate a fresh AI reply
     const assistantReply = await getAPIresponse(editedMessage);
 
     // Save new reply
@@ -150,6 +146,7 @@ router.put("/thread/:threadId/edit", verifyToken, async (req, res) => {
     res.json({
       message: "Message updated successfully.",
       thread,
+      reply: assistantReply,
     });
   } catch (err) {
     console.log(err);

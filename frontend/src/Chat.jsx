@@ -4,13 +4,16 @@ import { MyContext } from "./MyContext";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github-dark.css";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function Chat() {
+  const navigate = useNavigate();
+
   const { newChat, prevChats, setPrevChats, reply, setReply, currThreadId } =
     useContext(MyContext);
-  const [latestReply, setLatestReply] = useState(null);
 
-  // Edit states
+  const [latestReply, setLatestReply] = useState(null);
   const [editIdx, setEditIdx] = useState(null);
   const [editedMsg, setEditedMsg] = useState("");
 
@@ -51,6 +54,12 @@ function Chat() {
         },
       );
 
+      if (response.status === 401) {
+        toast.error("Session expired.");
+        navigate("/login");
+        return;
+      }
+
       const data = await response.json();
 
       if (response.ok) {
@@ -58,8 +67,10 @@ function Chat() {
         setReply(null);
         setEditIdx(null);
       }
+      toast.error(data.error || "Couldn't edit message");
     } catch (err) {
       console.log(err);
+      toast.error("Something went wrong");
     }
   };
 
@@ -149,71 +160,6 @@ function Chat() {
       </div>
     </>
   );
-
-  // return (
-  //   <>
-  //     {newChat && <h1>Start a New Chat</h1>}
-
-  //     <div className="chats">
-  //       {Array.isArray(prevChats) &&
-  //         prevChats?.slice(0, -1).map((chat, idx) => {
-  //           return (
-  //             <div
-  //               className={chat.role === "user" ? "userDiv" : "aiDiv"}
-  //               key={idx}
-  //             >
-  //               {chat.role === "user" ? (
-  //                 <div className="userMsgDiv">
-  //                   {/* <p className="userMsg">{chat.content}</p> */}
-  //                   {editIdx === idx ? (
-  //                     <textarea
-  //                       className="editTextarea"
-  //                       value={editedMsg}
-  //                       onChange={(e) => setEditedMsg(e.target.value)}
-  //                     />
-  //                   ) : (
-  //                     <p className="userMsg">{chat.content}</p>
-  //                   )}
-
-  //                   <button
-  //                     className="editBtn"
-  //                     onClick={() => {
-  //                       setEditIdx(idx);
-  //                       setEditedMsg(chat.content);
-  //                     }}
-  //                   >
-  //                     <i className="fa-solid fa-pen"></i>
-  //                   </button>
-  //                 </div>
-  //               ) : (
-  //                 <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
-  //                   {chat.content}
-  //                 </ReactMarkdown>
-  //               )}
-  //             </div>
-  //           );
-  //         })}
-
-  //       {Array.isArray(prevChats) && prevChats.length > 0 && (
-  //         <>
-  //           {latestReply === null ? (
-  //             <div className="aiDiv" key={"non-typing"}>
-  //               <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
-  //                 {prevChats[prevChats.length - 1].content}
-  //               </ReactMarkdown>
-  //             </div>
-  //           ) : (
-  //             <div className="aiDiv" key={"typing"}>
-  //               <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
-  //                 {latestReply}
-  //               </ReactMarkdown>
-  //             </div>
-  //           )}
-  //         </>
-  //       )}
-  //     </div>
-  //   </>
-  // );
 }
 
 export default Chat;
