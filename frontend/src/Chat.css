@@ -4,7 +4,7 @@
   padding: 3rem;
 
   scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* old Edge / IE */
+  -ms-overflow-style: none;
 }
 
 .chat::-webkit-scrollbar {
@@ -33,4 +33,144 @@
   align-items: center;
   gap: 10px;
   border: 1px solid #4d4d4f;
+}
+
+/* ========================= */
+/* USER MESSAGE */
+/* ========================= */
+
+/* .userMsgDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: relative;
+} */
+.userMsgDiv {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.userMsg {
+  background: #2f2f2f;
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 22px;
+  max-width: 75%;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+/* ========================= */
+/* EDIT BUTTON */
+/* ========================= */
+
+.editBtn {
+  opacity: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #9f9f9f;
+
+  cursor: pointer;
+
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease;
+
+  font-size: 16px;
+
+  padding: 0;
+}
+
+.userMsgDiv:hover .editBtn {
+  opacity: 1;
+}
+
+.editBtn:hover {
+  color: white;
+}
+
+/* ========================= */
+/* CHATGPT EDITOR */
+/* ========================= */
+
+.editTextarea {
+  width: 100%;
+  min-height: 140px;
+  background: #2f2f2f;
+  color: white;
+  border: 1px solid #565656;
+  border-radius: 28px;
+  padding: 18px 22px;
+  outline: none;
+  resize: none;
+  font-size: 14px;
+  font-family: inherit;
+  line-height: 1.7;
+  box-sizing: border-box;
+  transition: 0.2s;
+}
+
+.editTextarea:focus {
+  border-color: #7a7a7a;
+}
+
+.editTextarea::placeholder {
+  color: #8b8b8b;
+}
+
+/* ========================= */
+/* SAVE/CANCEL */
+/* ========================= */
+
+.editActions {
+  margin-top: 14px;
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+}
+
+.saveBtn,
+.cancelBtn {
+  padding: 9px 18px;
+
+  border-radius: 999px;
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.saveBtn {
+  background: white;
+
+  color: black;
+
+  border: none;
+}
+
+.saveBtn:hover {
+  background: #ececec;
+}
+
+.cancelBtn {
+  background: transparent;
+
+  color: white;
+
+  border: 1px solid #5a5a5a;
+}
+
+.cancelBtn:hover {
+  background: #3a3a3a;
 }

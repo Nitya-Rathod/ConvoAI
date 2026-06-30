@@ -91,4 +91,72 @@ router.post("/chat", verifyToken, async (req, res) => {
   }
 });
 
+// Edit the last user message and regenerate AI response
+router.put("/thread/:threadId/edit", verifyToken, async (req, res) => {
+  const { threadId } = req.params;
+  const { editedMessage } = req.body;
+
+  if (!editedMessage) {
+    return res.status(400).json({
+      error: "Edited message is required",
+    });
+  }
+
+  try {
+    // Find the thread belonging to the logged-in user
+    const thread = await Thread.findOne({
+      threadId,
+      userId: req.user.id,
+    });
+
+    if (!thread) {
+      return res.status(404).json({
+        error: "Thread not found",
+      });
+    }
+
+    // Find the last user message
+    let lastUserIndex = -1;
+
+    for (let i = thread.messages.length - 1; i >= 0; i--) {
+      if (thread.messages[i].role === "user") {
+        lastUserIndex = i;
+        break;
+      }
+    }
+
+    if (lastUserIndex === -1) {
+      return res.status(400).json({
+        error: "No user message found",
+      });
+    }
+
+    // Update the user's message
+    thread.messages[lastUserIndex].content = editedMessage;
+
+    // Remove everything after that message
+    thread.messages = thread.messages.slice(0, lastUserIndex + 1);
+
+    // Generate a fresh AI reply
+    const assistantReply = await getAPIresponse(editedMessage);
+
+    // Save new reply
+    thread.messages.push({
+      role: "assistant",
+      content: assistantReply,
+    });
+
+    await thread.save();
+    res.json({
+      message: "Message updated successfully.",
+      thread,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      error: "Failed to edit message",
+    });
+  }
+});
+
 export default router;
