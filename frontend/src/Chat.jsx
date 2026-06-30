@@ -62,12 +62,16 @@ function Chat() {
 
       const data = await response.json();
 
-      if (response.ok) {
-        setPrevChats(data.thread.messages);
-        setReply(null);
-        setEditIdx(null);
+      if (!response.ok) {
+        toast.error(data.error || "Couldn't edit message");
+        return;
       }
-      toast.error(data.error || "Couldn't edit message");
+
+      setPrevChats(data.thread.messages);
+      setReply(null);
+      setEditIdx(null);
+
+      toast.success("Message updated");
     } catch (err) {
       console.log(err);
       toast.error("Something went wrong");

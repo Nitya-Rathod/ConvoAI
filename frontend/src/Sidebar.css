@@ -151,3 +151,19 @@
   background-color: rgba(180, 180, 180, 0.05);
   border-radius: 10px;
 }
+
+/* thread rename */
+.renameInput {
+  width: 150px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ececec;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.renameInput::selection {
+  background: #3b82f6;
+  color: white;
+}

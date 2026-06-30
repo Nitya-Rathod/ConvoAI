@@ -7,13 +7,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const { user } = useContext(AuthContext);
-  const { setUser } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  const dropdownRef = useRef(null);
-  const userIconRef = useRef(null);
 
   const {
     allThreads,
@@ -25,6 +19,17 @@ export default function Sidebar() {
     setCurrThreadId,
     setPrevChats,
   } = useContext(MyContext);
+
+  const { user } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [editingThreadId, setEditingThreadId] = useState(null);
+  const [editedTitle, setEditedTitle] = useState("");
+
+  const inputRef = useRef(null);
+  const dropdownRef = useRef(null);
+  const userIconRef = useRef(null);
 
   const getAllThreads = async () => {
     try {
@@ -186,6 +191,62 @@ export default function Sidebar() {
     };
   }, []);
 
+  const handleRename = async (threadId) => {
+    const originalThread = allThreads.find(
+      (thread) => thread.threadId === threadId,
+    );
+
+    if (originalThread?.title === editedTitle.trim()) {
+      setEditingThreadId(null);
+      return;
+    }
+
+    if (!editedTitle.trim()) {
+      toast.error("Title cannot be empty");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/thread/${threadId}`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: editedTitle.trim(),
+          }),
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        toast.error(data.error || "Couldn't rename chat");
+        return;
+      }
+
+      // Update sidebar instantly
+      setAllThreads((prev) =>
+        prev.map((thread) =>
+          thread.threadId === threadId
+            ? { ...thread, title: editedTitle }
+            : thread,
+        ),
+      );
+
+      toast.success("Chat renamed");
+
+      setEditingThreadId(null);
+      setEditedTitle("");
+    } catch (err) {
+      console.log(err);
+      toast.error("Couldn't rename chat");
+    }
+  };
+
   return (
     <section className="sidebar">
       {/* logo and options panel */}
@@ -216,16 +277,45 @@ export default function Sidebar() {
           <li
             key={idx}
             onClick={() => changeThread(thread.threadId)}
+            onDoubleClick={() => {
+              setEditingThreadId(thread.threadId);
+              setEditedTitle(thread.title);
+            }}
             className={thread.threadId === currThreadId ? "highlighted" : ""}
           >
-            {thread.title}
-            <i
-              className="fa-solid fa-trash"
-              onClick={(e) => {
-                e.stopPropagation();
-                deleteThread(thread.threadId);
-              }}
-            ></i>
+            {/* {thread.title} */}
+            {editingThreadId === thread.threadId ? (
+              <input
+                ref={inputRef}
+                className="renameInput"
+                value={editedTitle}
+                onChange={(e) => setEditedTitle(e.target.value)}
+                onClick={(e) => e.stopPropagation()}
+                autoFocus
+                maxLength={50}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleRename(thread.threadId);
+                  }
+
+                  if (e.key === "Escape") {
+                    setEditingThreadId(null);
+                    setEditedTitle("");
+                  }
+                }}
+              />
+            ) : (
+              thread.title
+            )}
+            {editingThreadId !== thread.threadId && (
+              <i
+                className="fa-solid fa-trash"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteThread(thread.threadId);
+                }}
+              ></i>
+            )}
           </li>
         ))}
       </ul>

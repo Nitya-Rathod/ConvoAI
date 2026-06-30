@@ -5,7 +5,7 @@ import verifyToken from "../middleware/verifyToken.js";
 
 const router = express.Router();
 
-// get all threads on the  basis of desc order of "updatedAt"
+// GET(all) route - get all threads on the basis of desc order of "updatedAt"
 router.get("/thread", verifyToken, async (req, res) => {
   try {
     const threads = await Thread.find({ userId: req.user.id }).sort({
@@ -18,7 +18,7 @@ router.get("/thread", verifyToken, async (req, res) => {
   }
 });
 
-// get a single thread messages - sequence of chats
+// GET route - get a single thread (sequence of chats)
 router.get("/thread/:threadId", verifyToken, async (req, res) => {
   const { threadId } = req.params;
 
@@ -36,7 +36,7 @@ router.get("/thread/:threadId", verifyToken, async (req, res) => {
   }
 });
 
-// delete a thread
+// DELETE route - deletes a thread
 router.delete("/thread/:threadId", verifyToken, async (req, res) => {
   const { threadId } = req.params;
 
@@ -57,7 +57,51 @@ router.delete("/thread/:threadId", verifyToken, async (req, res) => {
   }
 });
 
-// create a new chat or update an existing chat thread
+// PATCH route - renames the thread
+router.patch("/thread/:threadId", verifyToken, async (req, res) => {
+  const { threadId } = req.params;
+  const { title } = req.body;
+
+  if (!title || !title.trim()) {
+    return res.status(400).json({
+      error: "Title is required",
+    });
+  }
+
+  try {
+    const thread = await Thread.findOneAndUpdate(
+      {
+        threadId,
+        userId: req.user.id,
+      },
+      {
+        title: title.trim(),
+      },
+      {
+        new: true,
+      },
+    );
+
+    if (!thread) {
+      return res.status(404).json({
+        error: "Thread not found",
+      });
+    }
+
+    res.json({
+      message: "Thread renamed successfully",
+      thread,
+    });
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      error: "Failed to rename thread",
+    });
+  }
+});
+
+// POST route - creates a new chat or update an existing chat thread
 router.post("/chat", verifyToken, async (req, res) => {
   const { threadId, msg } = req.body;
 
