@@ -1,5 +1,9 @@
 {
   "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
@@ -9,7 +13,9 @@
     "express-rate-limit": "^8.5.2",
     "groq-sdk": "^1.2.1",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.7.0",
+    "mongoose": "^9.7.0"
+  },
+  "devDependencies": {
     "nodemon": "^3.1.14"
   }
 }
