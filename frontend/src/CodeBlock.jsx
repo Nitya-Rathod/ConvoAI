@@ -6,9 +6,8 @@ function CodeBlock({ children, ...props }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    // const codeText = codeRef.current?.innerText || "";
-
     const codeText = codeRef.current?.textContent || "";
+
     try {
       await navigator.clipboard.writeText(codeText);
       setCopied(true);

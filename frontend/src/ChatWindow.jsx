@@ -49,7 +49,10 @@ function ChatWindow() {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/api/chat", options);
+      const response = await fetch(
+        "https://convoai-backend-r3mz.onrender.com/api/chat",
+        options,
+      );
 
       if (response.status === 401) {
         toast.error("Session expired. Please log in again.");

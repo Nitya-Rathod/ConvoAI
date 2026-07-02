@@ -9,9 +9,12 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/auth/me", {
-          credentials: "include",
-        });
+        const response = await fetch(
+          "https://convoai-backend-r3mz.onrender.com/api/auth/me",
+          {
+            credentials: "include",
+          },
+        );
 
         if (response.ok) {
           const data = await response.json();

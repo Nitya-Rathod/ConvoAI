@@ -34,9 +34,12 @@ export default function Sidebar() {
 
   const getAllThreads = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/thread", {
-        credentials: "include",
-      });
+      const response = await fetch(
+        "https://convoai-backend-r3mz.onrender.com/api/thread",
+        {
+          credentials: "include",
+        },
+      );
 
       if (response.status === 401) {
         setUser(null);
@@ -81,7 +84,7 @@ export default function Sidebar() {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/thread/${newThreadId}`,
+        `https://convoai-backend-r3mz.onrender.com/api/thread/${newThreadId}`,
         { credentials: "include" },
       );
 
@@ -111,7 +114,7 @@ export default function Sidebar() {
   const deleteThread = async (threadId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/thread/${threadId}`,
+        `https://convoai-backend-r3mz.onrender.com/api/thread/${threadId}`,
         { method: "DELETE", credentials: "include" },
       );
 
@@ -150,10 +153,13 @@ export default function Sidebar() {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
+      const response = await fetch(
+        "https://convoai-backend-r3mz.onrender.com/api/auth/logout",
+        {
+          method: "POST",
+          credentials: "include",
+        },
+      );
 
       if (!response.ok) {
         throw new Error("Logout failed");
@@ -209,7 +215,7 @@ export default function Sidebar() {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/thread/${threadId}`,
+        `https://convoai-backend-r3mz.onrender.com/api/thread/${threadId}`,
         {
           method: "PATCH",
           credentials: "include",

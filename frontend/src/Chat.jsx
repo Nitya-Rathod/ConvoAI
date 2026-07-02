@@ -51,7 +51,7 @@ function Chat() {
   const handleSaveEdit = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/thread/${currThreadId}/edit`,
+        `https://convoai-backend-r3mz.onrender.com/api/thread/${currThreadId}/edit`,
         {
           method: "PUT",
           credentials: "include",
