@@ -167,3 +167,13 @@
   background: #3b82f6;
   color: white;
 }
+
+/* Sidebar collapse */
+
+.sidebar {
+  transition: width 0.25s ease;
+}
+
+.sidebar.collapsed {
+  width: 55px;
+}

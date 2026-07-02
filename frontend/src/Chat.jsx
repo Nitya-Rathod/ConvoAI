@@ -1,11 +1,12 @@
 import "./Chat.css";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { MyContext } from "./MyContext";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github-dark.css";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import CodeBlock from "./CodeBlock.jsx";
 
 function Chat() {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ function Chat() {
   const [latestReply, setLatestReply] = useState(null);
   const [editIdx, setEditIdx] = useState(null);
   const [editedMsg, setEditedMsg] = useState("");
+
+  const bottomRef = useRef(null);
 
   useEffect(() => {
     if (reply === null) {
@@ -37,6 +40,13 @@ function Chat() {
 
     return () => clearInterval(interval);
   }, [prevChats, reply]);
+
+  // for auto scroll button
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [prevChats, latestReply]);
 
   const handleSaveEdit = async () => {
     try {
@@ -136,7 +146,10 @@ function Chat() {
                     )}
                   </div>
                 ) : (
-                  <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
+                  <ReactMarkdown
+                    rehypePlugins={[rehypeHighlight]}
+                    components={{ pre: CodeBlock }}
+                  >
                     {chat.content}
                   </ReactMarkdown>
                 )}
@@ -148,19 +161,26 @@ function Chat() {
           <>
             {latestReply === null ? (
               <div className="aiDiv">
-                <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
+                <ReactMarkdown
+                  rehypePlugins={[rehypeHighlight]}
+                  components={{ pre: CodeBlock }}
+                >
                   {prevChats[prevChats.length - 1].content}
                 </ReactMarkdown>
               </div>
             ) : (
               <div className="aiDiv">
-                <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
+                <ReactMarkdown
+                  rehypePlugins={[rehypeHighlight]}
+                  components={{ pre: CodeBlock }}
+                >
                   {latestReply}
                 </ReactMarkdown>
               </div>
             )}
           </>
         )}
+        <div ref={bottomRef}></div>
       </div>
     </>
   );

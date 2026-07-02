@@ -26,6 +26,7 @@ export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [editingThreadId, setEditingThreadId] = useState(null);
   const [editedTitle, setEditedTitle] = useState("");
+  const [collapsed, setCollapsed] = useState(false);
 
   const inputRef = useRef(null);
   const dropdownRef = useRef(null);
@@ -248,66 +249,85 @@ export default function Sidebar() {
   };
 
   return (
-    <section className="sidebar">
+    <section className={`sidebar ${collapsed ? "collapsed" : ""}`}>
       {/* logo and options panel */}
+
       <div className="sidebar-nav">
-        <i className="fa-brands fa-gg-circle logo"></i>
-        <span>
-          <i className="fa-solid fa-bars menubar"></i>
-        </span>
+        <i
+          className="fa-brands fa-gg-circle logo"
+          onClick={() => {
+            if (collapsed) setCollapsed(false);
+          }}
+        ></i>
+
+        {!collapsed && (
+          <span>
+            <i
+              className="fa-solid fa-bars menubar"
+              onClick={() => setCollapsed(true)}
+            ></i>
+          </span>
+        )}
       </div>
 
       {/* options */}
+
       <div className="options">
         <li onClick={createNewChat} className="newChat">
-          <i className="fa-solid fa-plus"></i>New chat
+          <i className="fa-solid fa-plus"></i> {!collapsed && "New chat"}
         </li>
         <li>
-          <i className="fa-regular fa-comment-dots"></i> Chats
+          <i className="fa-regular fa-comment-dots"></i> {!collapsed && "Chat"}
         </li>
         <li>
-          <i className="fa-regular fa-file-lines"></i> Projects
+          <i className="fa-regular fa-file-lines"></i>{" "}
+          {!collapsed && "Projects"}
         </li>
       </div>
 
       {/* history of threads */}
+
       <ul className="history">
-        Recents
+        {!collapsed && "Recents"}
+
         {allThreads?.map((thread, idx) => (
           <li
             key={idx}
             onClick={() => changeThread(thread.threadId)}
             onDoubleClick={() => {
-              setEditingThreadId(thread.threadId);
-              setEditedTitle(thread.title);
+              if (!collapsed) {
+                setEditingThreadId(thread.threadId);
+                setEditedTitle(thread.title);
+              }
             }}
             className={thread.threadId === currThreadId ? "highlighted" : ""}
           >
-            {/* {thread.title} */}
-            {editingThreadId === thread.threadId ? (
-              <input
-                ref={inputRef}
-                className="renameInput"
-                value={editedTitle}
-                onChange={(e) => setEditedTitle(e.target.value)}
-                onClick={(e) => e.stopPropagation()}
-                autoFocus
-                maxLength={50}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleRename(thread.threadId);
-                  }
+            {!collapsed &&
+              (editingThreadId === thread.threadId ? (
+                <input
+                  ref={inputRef}
+                  className="renameInput"
+                  value={editedTitle}
+                  onChange={(e) => setEditedTitle(e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
+                  autoFocus
+                  maxLength={50}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleRename(thread.threadId);
+                    }
 
-                  if (e.key === "Escape") {
-                    setEditingThreadId(null);
-                    setEditedTitle("");
-                  }
-                }}
-              />
-            ) : (
-              thread.title
-            )}
-            {editingThreadId !== thread.threadId && (
+                    if (e.key === "Escape") {
+                      setEditingThreadId(null);
+                      setEditedTitle("");
+                    }
+                  }}
+                />
+              ) : (
+                thread.title
+              ))}
+
+            {!collapsed && editingThreadId !== thread.threadId && (
               <i
                 className="fa-solid fa-trash"
                 onClick={(e) => {
@@ -321,6 +341,7 @@ export default function Sidebar() {
       </ul>
 
       {/* Profile details */}
+
       <div
         className="userIconDiv"
         ref={userIconRef}
@@ -334,7 +355,6 @@ export default function Sidebar() {
           </div>
         )}
       </div>
-
       {isOpen && (
         <div className="dropdown" ref={dropdownRef}>
           <div className="dropdownItem">

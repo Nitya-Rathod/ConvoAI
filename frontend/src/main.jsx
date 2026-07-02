@@ -14,7 +14,7 @@ createRoot(document.getElementById("root")).render(
           position="top-center"
           reverseOrder={false}
           toastOptions={{
-            duration: 3000,
+            duration: 2000,
           }}
         />
         <App />

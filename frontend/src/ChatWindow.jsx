@@ -59,6 +59,11 @@ function ChatWindow() {
 
       const res = await response.json();
 
+      if (response.status === 429) {
+        toast.error(res.error);
+        return;
+      }
+
       if (!response.ok) {
         toast.error(res.error || "Failed to generate response");
         return;

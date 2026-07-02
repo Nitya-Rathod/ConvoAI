@@ -174,3 +174,34 @@
 .cancelBtn:hover {
   background: #3a3a3a;
 }
+
+/* copy code button */
+.codeBlockWrapper {
+  position: relative;
+}
+
+.copyBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 6px 8px;
+  background: #2d2d2d;
+  border: 1px solid #444;
+  border-radius: 6px;
+  color: #ccc;
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    background 0.15s ease;
+  z-index: 2;
+}
+
+.codeBlockWrapper:hover .copyBtn {
+  opacity: 1;
+}
+
+.copyBtn:hover {
+  background: #3d3d3d;
+  color: #fff;
+}
