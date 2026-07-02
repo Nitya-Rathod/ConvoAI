@@ -71,7 +71,7 @@ function Chat() {
       setReply(null);
       setEditIdx(null);
 
-      toast.success("Message updated");
+      toast.success("Prompt updated");
     } catch (err) {
       console.log(err);
       toast.error("Something went wrong");

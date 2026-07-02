@@ -15,18 +15,17 @@ function ChatWindow() {
     setReply,
     currThreadId,
     setPrevChats,
-    allThreads, // added
-    setAllThreads, //added
+    allThreads,
+    setAllThreads,
     setNewChat,
   } = useContext(MyContext);
-
-  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const isLoggedIn = !!user;
 
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  const { user } = useContext(AuthContext);
-  const isLoggedIn = !!user;
+  const navigate = useNavigate();
 
   const getReply = async () => {
     if (!prompt.trim()) {

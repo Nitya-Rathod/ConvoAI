@@ -7,6 +7,8 @@ import Sidebar from "./Sidebar";
 import ChatWindow from "./ChatWindow";
 import Login from "./Login";
 import Signup from "./Signup";
+import { useContext } from "react";
+import { AuthContext } from "./AuthContext";
 
 function App() {
   const [prompt, setPrompt] = useState("");
@@ -30,6 +32,12 @@ function App() {
     allThreads,
     setAllThreads,
   };
+
+  const { loading } = useContext(AuthContext);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <MyContext.Provider value={providerValues}>
