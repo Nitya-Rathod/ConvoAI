@@ -15,6 +15,8 @@ function ChatWindow() {
     setReply,
     currThreadId,
     setPrevChats,
+    allThreads, // added
+    setAllThreads, //added
     setNewChat,
   } = useContext(MyContext);
 
@@ -27,7 +29,6 @@ function ChatWindow() {
   const isLoggedIn = !!user;
 
   const getReply = async () => {
-    // prevents empty messages.
     if (!prompt.trim()) {
       toast.error("Please enter a message.");
       return;
@@ -62,6 +63,16 @@ function ChatWindow() {
       if (!response.ok) {
         toast.error(res.error || "Failed to generate response");
         return;
+      }
+
+      if (res.isNewThread) {
+        setAllThreads((prev) => [
+          {
+            threadId: res.thread.threadId,
+            title: res.thread.title,
+          },
+          ...prev,
+        ]);
       }
 
       setReply(res.reply);

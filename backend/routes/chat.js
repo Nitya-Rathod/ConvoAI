@@ -112,7 +112,11 @@ router.post("/chat", verifyToken, async (req, res) => {
   try {
     let thread = await Thread.findOne({ threadId, userId: req.user.id });
 
+    let isNewThread = false;
+
     if (!thread) {
+      isNewThread = true;
+
       thread = new Thread({
         userId: req.user.id,
         threadId,
@@ -128,7 +132,7 @@ router.post("/chat", verifyToken, async (req, res) => {
 
     await thread.save();
 
-    res.json({ reply: assistantReply }); // sending reply to frontend
+    res.json({ reply: assistantReply, thread, isNewThread }); // sending reply to frontend
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Something went wrong" });
