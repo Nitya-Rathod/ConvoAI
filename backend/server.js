@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 8080;
 // middlewares
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://convo-ai-henna.vercel.app",
     credentials: true,
   }),
 );
