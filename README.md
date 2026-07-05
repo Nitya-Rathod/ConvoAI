@@ -2,7 +2,7 @@
 
 A full-stack, ChatGPT-style AI chat application built with the MERN stack, powered by Groq's LLM API. ConvoAI supports persistent threaded conversations, prompt editing with regeneration, syntax-highlighted code blocks with one-click copy, and a polished, responsive dark-themed UI.
 
-**🔗 Live Demo:** [your-deployed-link-here](#)
+**🔗 Live Demo:** (#)
 
 ---
 
