@@ -11,9 +11,14 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // middlewares
+const allowedOrigins = [
+  "https://convo-ai-henna.vercel.app",
+  "http://localhost:5173",
+];
+
 app.use(
   cors({
-    origin: "https://convo-ai-henna.vercel.app",
+    origin: allowedOrigins,
     credentials: true,
   }),
 );

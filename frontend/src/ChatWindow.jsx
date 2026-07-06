@@ -6,6 +6,7 @@ import { ScaleLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 import toast from "react-hot-toast";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function ChatWindow() {
   const {
@@ -49,10 +50,7 @@ function ChatWindow() {
     };
 
     try {
-      const response = await fetch(
-        "https://convoai-backend-r3mz.onrender.com/api/chat",
-        options,
-      );
+      const response = await fetch(`${API_URL}/api/chat`, options);
 
       if (response.status === 401) {
         toast.error("Session expired. Please log in again.");

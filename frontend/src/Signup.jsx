@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 import toast from "react-hot-toast";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -18,15 +19,12 @@ export default function Signup() {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        "https://convoai-backend-r3mz.onrender.com/api/auth/signup",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ name, email, password }),
-        },
-      );
+      const response = await fetch(`${API_URL}/api/auth/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ name, email, password }),
+      });
 
       const data = await response.json();
 

@@ -7,6 +7,7 @@ import "highlight.js/styles/github-dark.css";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import CodeBlock from "./CodeBlock.jsx";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Chat() {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ function Chat() {
   const handleSaveEdit = async () => {
     try {
       const response = await fetch(
-        `https://convoai-backend-r3mz.onrender.com/api/thread/${currThreadId}/edit`,
+        `${API_URL}/api/thread/${currThreadId}/edit`,
         {
           method: "PUT",
           credentials: "include",

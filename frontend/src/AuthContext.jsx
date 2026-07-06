@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const AuthContext = createContext();
 
@@ -9,12 +10,9 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
-        const response = await fetch(
-          "https://convoai-backend-r3mz.onrender.com/api/auth/me",
-          {
-            credentials: "include",
-          },
-        );
+        const response = await fetch(`${API_URL}/api/auth/me`, {
+          credentials: "include",
+        });
 
         if (response.ok) {
           const data = await response.json();
