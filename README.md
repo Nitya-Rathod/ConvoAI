@@ -2,7 +2,7 @@
 
 AI chatbot built with the MERN stack and powered by Groq's Llama 3.1 model. It features secure JWT authentication, persistent threaded conversations, prompt regeneration, Markdown rendering with syntax-highlighted code blocks, and a responsive dark-themed UI. The application is fully containerized using Docker and Docker Compose.
 
-**🔗 Live Demo:** [Link](https://convo-ai-henna.vercel.app/)
+**🔗 Live Demo:** https://convo-ai-henna.vercel.app/
 
 ---
 
