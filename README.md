@@ -1,6 +1,6 @@
 # ConvoAI 🤖💬
 
-A full-stack, ChatGPT-style AI chat application built with the MERN stack, powered by Groq's LLM API. ConvoAI supports persistent threaded conversations, prompt editing with regeneration, syntax-highlighted code blocks with one-click copy, and a polished, responsive dark-themed UI.
+AI chatbot built with the MERN stack and powered by Groq's Llama 3.1 model. It features secure JWT authentication, persistent threaded conversations, prompt regeneration, Markdown rendering with syntax-highlighted code blocks, and a responsive dark-themed UI. The application is fully containerized using Docker and Docker Compose.
 
 **🔗 Live Demo:** [Link](https://convo-ai-henna.vercel.app/)
 
@@ -32,11 +32,13 @@ A full-stack, ChatGPT-style AI chat application built with the MERN stack, power
 - 🔄 **Auto-scroll —** Automatically scrolls to the newest AI response during conversations
 - 📄 **Markdown Rendering —** AI responses support Markdown formatting
 - 🔒 **Session Persistence —** User stays logged in across refreshes using httpOnly JWT cookies
+
 ---
 
 ## 🛠️ Tech Stack
 
 **Frontend**
+
 - React (Vite)
 - React Router
 - React Markdown + rehype-highlight
@@ -44,6 +46,7 @@ A full-stack, ChatGPT-style AI chat application built with the MERN stack, power
 - CSS (custom, dark theme)
 
 **Backend**
+
 - Node.js + Express
 - MongoDB + Mongoose
 - JWT (jsonwebtoken) + bcrypt
@@ -51,6 +54,7 @@ A full-stack, ChatGPT-style AI chat application built with the MERN stack, power
 - Groq API (`llama-3.1-8b-instant`)
 
 **Deployment**
+
 - Frontend: Vercel
 - Backend: Render
 - Database : MongoDB Atlas
@@ -112,29 +116,33 @@ ConvoAI/
 ## ⚙️ Getting Started
 
 ### Prerequisites
+
 - Node.js (v18+)
 - MongoDB (local instance or MongoDB Atlas)
 - A Groq API key ([console.groq.com](https://console.groq.com))
 
 ### 1. Clone the repository
+
 ```bash
 git clone https://github.com/your-username/convoai.git
 cd convoai
 ```
 
 ### 2. Backend setup
+
 ```bash
 cd backend
 npm install
 ```
 
-Create a `.env` file in `/server`:
+Create a `.env` file in `/backend`:
+
 ```env
 PORT=8080
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 GROQ_API_KEY=your_groq_api_key
-CLIENT_URL=http://localhost:5173
+Frontend_URL=http://localhost:5173
 ```
 
 ```bash
@@ -142,12 +150,14 @@ npm run dev
 ```
 
 ### 3. Frontend setup
+
 ```bash
 cd frontend
 npm install
 ```
 
 Create a `.env` file in `/client`:
+
 ```env
 VITE_API_BASE_URL=http://localhost:8080
 ```
@@ -170,6 +180,7 @@ A few real issues solved while building this project:
 - **Field name mismatch:** A `400 Bad Request` traced back to the frontend sending `message` while the backend expected `msg`.
 - **Copy-to-clipboard indentation bug:** Initially used `innerText` to extract code text, which collapsed whitespace due to CSS rendering rules; switched to `textContent` to preserve exact formatting.
 - **Cross-origin authentication:** Configured secure httpOnly cookies to support authentication across Vercel (frontend) and Render (backend), handling SameSite and CORS correctly.
+
 ---
 
 ## 🚀 Future Improvements
@@ -181,6 +192,7 @@ A few real issues solved while building this project:
 - [ ] Voice input
 
 ---
+
 ## 📚 Key Learnings
 
 - Designing scalable React state using Context API
@@ -188,11 +200,13 @@ A few real issues solved while building this project:
 - Building RESTful CRUD APIs with Express and MongoDB
 - Integrating third-party LLM APIs (Groq)
 - Rendering Markdown safely with syntax-highlighted code blocks
-  
+
 ---
+
 ## 🙋 Author
 
 **Nitya Rathod**
+
 - GitHub: [Nitya-Rathod](https://github.com/Nitya-Rathod)
 - LinkedIn: [nitya-rathod](https://www.linkedin.com/in/nitya-rathod/)
 
