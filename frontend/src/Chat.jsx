@@ -3,7 +3,6 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { MyContext } from "./MyContext";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
-import remarkGfm from "remark-gfm";
 import "highlight.js/styles/github-dark.css";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
