@@ -8,7 +8,7 @@ const getAPIresponse = async (message) => {
       Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
     },
     body: JSON.stringify({
-      model: "llama-3.1-8b-instant",
+      model: "openai/gpt-oss-20b",
       messages: [
         {
           role: "user",
@@ -24,9 +24,16 @@ const getAPIresponse = async (message) => {
       options,
     );
     const data = await response.json();
+
+    if (data.error) {
+      console.log("Groq API error:", data.error);
+      throw new Error(data.error.message || "Groq API request failed");
+    }
+
     return data.choices[0].message.content;
   } catch (err) {
     console.log(err);
+    throw err;
   }
 };
 
