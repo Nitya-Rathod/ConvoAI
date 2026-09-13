@@ -53,6 +53,7 @@ AI responses containing code are rendered with language-aware syntax highlightin
 - 🔄 **Auto-scroll —** Automatically scrolls to the newest AI response during conversations
 - 📄 **Markdown Rendering —** AI responses support Markdown formatting
 - 🔒 **Session Persistence —** User stays logged in across refreshes using httpOnly JWT cookies
+- 🐳 **Dockerized —** Fully containerized frontend and backend using Docker and Docker Compose for consistent local development and deployment
 
 ---
 
@@ -79,6 +80,7 @@ AI responses containing code are rendered with language-aware syntax highlightin
 - Frontend: Vercel
 - Backend: Render
 - Database: MongoDB Atlas
+- Containerization: Docker, Docker Compose
 
 ---
 
