@@ -19,6 +19,7 @@
     "react-spinner": "^0.2.7",
     "react-spinners": "^0.17.0",
     "rehype-highlight": "^7.0.2",
+    "remark-gfm": "^4.0.1",
     "uuid": "^14.0.0"
   },
   "devDependencies": {

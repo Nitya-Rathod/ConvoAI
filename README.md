@@ -8,7 +8,35 @@ AI chatbot built with the MERN stack and powered by Groq's Llama 3.1 model. It f
 
 ## 📸 Screenshots
 
-> Add 2–4 screenshots or a GIF here showing: chat interface, code block with copy button, sidebar with threads, and mobile responsive view.
+### 🏠 Main Page
+
+The main dashboard where users can start new conversations, access previous chats, and interact with ConvoAI.
+
+![Main Page](./screenshots/MainPage.png)
+
+### 💬 AI Response
+
+The chat interface displaying AI-generated responses with support for formatted text, code blocks, and Markdown.
+
+![AI Response](./screenshots/Response.png)
+
+### ✏️ Edit Prompt
+
+Allows users to edit their previous prompts and update the conversation accordingly.
+
+![Edit Prompt](./screenshots/EditPrompt.png)
+
+### 🗑️ Delete Chat
+
+Provides users with the option to delete conversations from their chat history.
+
+![Delete Chat](./screenshots/DeleteChat.png)
+
+### 🔐 Authentication
+
+Secure login and signup interface for user authentication and account access.
+
+![Authentication](./screenshots/AuthPage.png)
 
 ```
 ![Chat Interface](./screenshots/chat-interface.png)

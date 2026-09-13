@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { MyContext } from "./MyContext";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
+import remarkGfm from "remark-gfm";
 import "highlight.js/styles/github-dark.css";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -148,6 +149,7 @@ function Chat() {
                   </div>
                 ) : (
                   <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
                     rehypePlugins={[rehypeHighlight]}
                     components={{ pre: CodeBlock }}
                   >
@@ -163,6 +165,7 @@ function Chat() {
             {latestReply === null ? (
               <div className="aiDiv">
                 <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeHighlight]}
                   components={{ pre: CodeBlock }}
                 >
@@ -172,6 +175,7 @@ function Chat() {
             ) : (
               <div className="aiDiv">
                 <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeHighlight]}
                   components={{ pre: CodeBlock }}
                 >

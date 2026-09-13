@@ -205,3 +205,20 @@
   background: #3d3d3d;
   color: #fff;
 }
+
+.aiDiv table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 12px 0;
+}
+
+.aiDiv th,
+.aiDiv td {
+  border: 1px solid #444;
+  padding: 6px 10px;
+  text-align: left;
+}
+
+.aiDiv th {
+  background: #2a2a2a;
+}
