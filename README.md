@@ -1,6 +1,6 @@
 # ConvoAI 🤖💬
 
-AI chatbot built with the MERN stack and powered by Groq's Llama 3.1 model. It features secure JWT authentication, persistent threaded conversations, prompt regeneration, Markdown rendering with syntax-highlighted code blocks, and a responsive dark-themed UI. The application is fully containerized using Docker and Docker Compose.
+AI chatbot built with the MERN stack and powered by Groq's "openai/gpt-oss-20b" model. It features secure JWT authentication, persistent threaded conversations, prompt regeneration, Markdown rendering with syntax-highlighted code blocks, and a responsive dark-themed UI.
 
 **🔗 Live Demo:** https://convo-ai-henna.vercel.app/
 
@@ -32,11 +32,11 @@ Allows users to edit their previous prompts and update the conversation accordin
 
 ![Edit Prompt](./screenshots/EditPrompt.png)
 
-### Delete Chat
+### Code Generation & Syntax Highlighting
 
-Allows users to delete unwanted conversations from their chat history.
+AI responses containing code are rendered with language-aware syntax highlighting and a one-click copy button.
 
-## ![Delete Chat](./screenshots/DeleteChat.png)
+![Code generation](./screenshots/CodeGen.png)
 
 ## ✨ Features
 
@@ -78,7 +78,7 @@ Allows users to delete unwanted conversations from their chat history.
 
 - Frontend: Vercel
 - Backend: Render
-- Database : MongoDB Atlas
+- Database: MongoDB Atlas
 
 ---
 
@@ -160,7 +160,7 @@ Create a `.env` file in `/backend`:
 
 ```env
 PORT=8080
-MONGODB_URI=your_mongodb_connection_string
+MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 GROQ_API_KEY=your_groq_api_key
 Frontend_URL=http://localhost:5173
@@ -177,10 +177,10 @@ cd frontend
 npm install
 ```
 
-Create a `.env` file in `/client`:
+Create a `.env` file in `/frontend`:
 
 ```env
-VITE_API_BASE_URL=http://localhost:8080
+VITE_API_URL=http://localhost:8080
 ```
 
 ```bash
